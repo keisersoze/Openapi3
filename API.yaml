@@ -1,0 +1,600 @@
+openapi: 3.0.0
+info:
+  title: Lynx platform
+  version: 0.1.1
+servers:
+  - url: 'http://lynx.com'
+tags:
+  - name: API-gateway
+    description: Route the API requests avaiable for third parties client, end-users to one or more platform services
+  - name: Logging
+    description: Used for logging messages of others services
+  - name: Authorization
+    description: Grant authorization control to  the resources managing authentication, tokens and users
+  - name: Document I/E
+    description: Manage some controls to uploaded files and convert them to a unique internal fomat
+  - name: Jobs
+    description: Manage different types of jobs that can be used to call some services of the Task Manager
+    
+paths:
+  /api/pilot/1-1:
+    post:
+      tags:
+        - API-gateway
+      summary: The API for the pilot use case 1.1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Log'
+      responses:
+        '400':
+            $ref: '#/components/responses/BadRequest'
+        '401':
+            $ref: '#/components/responses/Unauthorized' 
+        '403':
+            $ref: '#/components/responses/Forbidden'
+  /api/pilot/1-2:
+    post:
+      tags:
+        - API-gateway
+      summary: The API for the pilot use case 1.2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Log'
+      responses:
+        '400':
+            $ref: '#/components/responses/BadRequest'
+        '401':
+            $ref: '#/components/responses/Unauthorized' 
+        '403':
+            $ref: '#/components/responses/Forbidden'   
+  /api/pilot/1-3:
+    post:
+      tags:
+        - API-gateway
+      summary: The API for the pilot use case 1.3
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Log'
+      responses:
+        '400':
+            $ref: '#/components/responses/BadRequest'
+        '401':
+            $ref: '#/components/responses/Unauthorized' 
+        '403':
+            $ref: '#/components/responses/Forbidden' 
+  /api/pilot/2-1:
+    post:
+      tags:
+        - API-gateway
+      summary: The API for the pilot use case 2.1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UC2.1-2.2InputModel'
+      responses:
+        '200':
+            $ref: '#/components/responses/UC2.1-UC2.2Successful'
+        '400':
+            $ref: '#/components/responses/BadRequest'
+        '401':
+            $ref: '#/components/responses/Unauthorized' 
+        '403':
+            $ref: '#/components/responses/Forbidden'
+  /api/pilot/2-2:
+    post:
+      tags:
+        - API-gateway
+      summary: The API for the pilot use case 2.2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UC2.1-2.2InputModel'
+      responses:
+        '200':
+            $ref: '#/components/responses/UC2.1-UC2.2Successful'
+        '400':
+            $ref: '#/components/responses/BadRequest'
+        '401':
+            $ref: '#/components/responses/Unauthorized' 
+        '403':
+            $ref: '#/components/responses/Forbidden'   
+  /api/pilot/2-3:
+    post:
+      tags:
+        - API-gateway
+      summary: The API for the pilot use case 2.3
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UC2.1-2.2InputModel'
+      responses:
+        '200':
+            $ref: '#/components/responses/UC2.3Successful'
+        '400':
+            $ref: '#/components/responses/BadRequest'
+        '401':
+            $ref: '#/components/responses/Unauthorized' 
+        '403':
+            $ref: '#/components/responses/Forbidden'
+  /api/pilot/3a-1:
+    post:
+      tags:
+        - API-gateway
+      summary: The API for the pilot use case 3a.1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Log'
+      responses:
+        '400':
+            $ref: '#/components/responses/BadRequest'
+        '401':
+            $ref: '#/components/responses/Unauthorized' 
+        '403':
+            $ref: '#/components/responses/Forbidden'
+  /api/pilot/3a-2:
+    post:
+      tags:
+        - API-gateway
+      summary: The API for the pilot use case 3a.2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Log'
+      responses:
+        '400':
+            $ref: '#/components/responses/BadRequest'
+        '401':
+            $ref: '#/components/responses/Unauthorized' 
+        '403':
+            $ref: '#/components/responses/Forbidden'   
+  /api/pilot/3b-1:
+    post:
+      tags:
+        - API-gateway
+      summary: The API for the pilot use case 3b.1
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                info:
+                  type: string
+                project_description:
+                  type: string
+                  format: binary
+            encoding:
+              RFP:
+                contentType: application/pdf
+      responses:
+        '200': 
+          description: A JSON array of related content with an associated category
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                    compliance_contents:
+                      type: array
+                      items:
+                        type: string
+        '400':
+            $ref: '#/components/responses/BadRequest'
+        '401':
+            $ref: '#/components/responses/Unauthorized' 
+        '403':
+            $ref: '#/components/responses/Forbidden'
+  /api/pilot/3b-2:
+    post:
+      tags:
+        - API-gateway
+      summary: The API for the pilot use case 3b.2
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                info:
+                  type: string
+                project_description:
+                  type: string
+                  format: binary
+            encoding:
+              RFP:
+                contentType: application/pdf
+      responses:
+        '200': 
+          description: A JSON array of related content with an associated category
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                    compliance_contents:
+                      type: array
+                      items:
+                        type: string
+        '400':
+            $ref: '#/components/responses/BadRequest'
+        '401':
+            $ref: '#/components/responses/Unauthorized' 
+        '403':
+            $ref: '#/components/responses/Forbidden'
+  /api/freesearch:
+    post:
+      tags:
+        - API-gateway
+      summary: Free search for public documents
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+            
+            
+      
+  /logging/log:
+    post:
+      tags:
+        - Logging
+      summary: Log some message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Log'
+      responses:
+        '201':
+          description: The log message was successfully registred
+  /logging/history:
+    get:
+      tags:
+        - Logging
+      summary: Returns all log messages that have been registred until now
+      responses:
+        '200':
+          description: A JSON array of Logs sorted by the dateTime
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Log'
+  /logging/history/{dateTime}:
+    get:
+      tags:
+        - Logging
+      summary: >-
+        Returns all log messages that have been registred from the parameter
+        dateTime until now
+      parameters:
+        - name: dateTime
+          in: path
+          required: true
+          description: the dateTime for filtering the log messages
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: A JSON array of Logs sorted by the dateTime
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Log'
+  /auth/oauth/check_token:
+    post:
+      tags:
+        - Authorization
+      summary: Validate a token, this API is used as a token introspection endpoint from all first party clients
+      requestBody:
+        required: true
+        content:
+          x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                token: 
+                  type: string
+      responses:
+        '204':
+          description: The token is valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWT'
+        '400':
+          description: Invalid token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: invalid_token
+                error_description: Token has expired
+  /auth/oauth/token:
+    post:
+      tags:
+        - Authorization
+      summary: Grant a new token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Log'
+      responses:
+        '200':
+            $ref: '#/components/responses/TokenResponse'
+  /auth/user/{username}:
+    get:
+      tags:
+        - Authorization
+      summary: Get an user information 
+      parameters:
+        - in: path
+          name: username   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+          description: The username of the user
+      responses:
+        '200':
+          description: The user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      tags:
+        - Authorization
+      summary: Create a new user or update an already existing one
+      parameters:
+        - in: path
+          name: username   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+          description: The username of the user to be created or modified
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '204':
+          description: The user has been successfully updated
+  /auth/user:
+    post:
+      tags:
+        - Authorization
+      summary: Create a new user 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: The user has been successfully created
+        '409':
+          description: The username specified already exist
+  /document:
+    post:
+      tags:
+        - Document I/E
+      summary: Upload a multipart file in the platform (Format supported pdf, xml, )
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Log'
+      responses:
+        '201':
+          description: The log message was successfully registred
+    get:
+      tags:
+        - Document I/E
+      summary: Download multipart file from the platform (Format supported)
+      responses:
+        '201':
+          description: The log message was successfully registred
+components:
+  securitySchemes:
+    oAuth2Password:
+      type: oauth2
+      description: See https://developers.getbase.com/docs/rest/articles/oauth2/requests
+      flows: 
+        password: 
+          tokenUrl: /auth/oauth2/token
+          scopes: 
+            read: Grant read-only access to all your data except for the account and user info
+            write: Grant write-only access to all your data except for the account and user info
+  responses:
+    BadRequest:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UC2.1-UC2.2Successful:
+      description: The list of related paragraphs of laws
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UC2.1-2.2OutputModel'
+    UC2.3Successful:
+      description: The list of related paragraphs of laws
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UC2.1-2.2OutputModel'
+    TokenResponse:
+      description: The token response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/JWT'
+            
+                
+                
+            
+  schemas:
+    Log:
+      properties:
+        requestNumber:
+          type: integer
+        serviceIdentifier:
+          type: string
+        serviceInstanceNumber:
+          type: integer
+        level:
+          type: string
+          enum:
+            - INFO
+            - WARNING
+            - ERROR
+        dateTime:
+          type: string
+          format: date-time
+        message:
+          type: string
+      required:
+        - requestNumber
+        
+    User:
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        authorities:
+          type: string
+          enum:
+            - user_read
+            - user_write
+            - admin_read
+            - admin_write
+        
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+      required:
+        - code
+        - message
+        
+    UC2.1-2.2InputModel:
+      properties:
+        query:
+          type: string
+        infos:
+          type: array
+          items:
+            type: object
+            properties:
+              juristiction: 
+                type: string
+              nemployes:
+                type: integer
+              hasRapresentativeEntity:
+                type: boolean
+            required:
+              - juristiction
+                
+      required:
+        - query
+        - juristictions
+    UC2.1-2.2OutputModel:
+      properties:
+        responses:
+          type: array
+          items:
+            type: object
+            properties:
+              juristiction: 
+                type: string
+              articles:
+                type: array
+                items:
+                  type: object
+                  properties: 
+                    articlePart: 
+                      type: string
+                    relatedJurisprudence:
+                      type: string
+            required:
+              - juristiction
+    JWT:
+      properties:
+        access_token: 
+          type: string
+        token_type: 
+          type: string
+        expires_in: 
+          type: integer
+        scope:
+          type: string
+        id_token:
+          type: string
+security: 
+  - oAuth2Password:
+      - read
+      - write
+    
+    
