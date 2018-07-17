@@ -1,0 +1,210 @@
+openapi: 3.0.0
+info:
+  title: Auth
+  version: 0.0.0
+  description: Manage clients and Lynx users authorization and authentication
+  termsOfService: 'http://lynx-project.eu/terms/'
+  contact:
+    name: Lynx-Project API Team
+    email: apiteam@lynx-project.eu
+    url: 'https://lynx-project.eu'
+paths:
+  /auth/oauth/check_token:
+    post:
+      tags:
+        - Authorization
+      summary: >-
+        Validate a token, this API is used as a token introspection endpoint
+        from all clients of the Lynx platform to authorize requests
+      requestBody:
+        required: true
+        content:
+          x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+      responses:
+        '204':
+          description: The token is valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWT'
+        '400':
+          description: Invalid token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: invalid_token
+                error_description: Token has expired
+  /auth/user/{username}:
+    get:
+      tags:
+        - Authorization
+      summary: Get an user
+      security:
+        - oAuth2: []
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user
+      responses:
+        '200':
+          description: An user JSON object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    put:
+      tags:
+        - Authorization
+      summary: Create a new user or update an already existing one
+      security:
+        - oAuth2: []
+      parameters:
+        - in: path
+          name: username
+          required: true
+          schema:
+            type: string
+          description: The username of the user to be created or modified
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '204':
+          description: The user has been successfully updated
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /auth/user:
+    get:
+      tags:
+        - Authorization
+      summary: Get all users
+      security:
+        - oAuth2: []
+      responses:
+        '200':
+          description: A JSON array of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      tags:
+        - Authorization
+      summary: Create a new user
+      security:
+        - oAuth2: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: The user has been successfully created
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          description: The username specified already exist
+components:
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://?/oauth/token
+          refreshUrl: https://?/oauth/refresh
+        password:
+          tokenUrl: https://?/oauth/token
+          refreshUrl: https://?/oauth/refresh
+  responses:
+    BadRequest:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    User:
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        authorities:
+          type: string
+          enum:
+            - pilot1
+            - pilot1_premium
+            - pilot1b
+            - pilot2
+            - pilot2_enterprise
+            - pilot3a
+            - pilot3b
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+      required:
+        - code
+        - message
+    JWT:
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+        expires_in:
+          type: integer
+        scope:
+          type: string
+        id_token:
+          type: string

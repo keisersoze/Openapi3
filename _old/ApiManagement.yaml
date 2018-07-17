@@ -1,0 +1,516 @@
+openapi: 3.0.0
+info:
+  title: API management
+  version: 0.0.0
+  description: Expose RESTful API avaiable for first party clients, end-users and administrators. The requests are routed to other platform services.
+  termsOfService: 'http://lynx-project.eu/terms/'
+  contact:
+    name: Lynx-Project API Team
+    email: apiteam@lynx-project.eu
+    url: 'https://lynx-project.eu'
+paths:
+  /api/pilot/1-1:
+    get:
+      tags:
+        - Pilot use case
+      summary: Free information search
+      description: The API for the pilot use case 1.1
+      security:
+        - oAuth2: []
+      parameters: 
+        - name: query
+          in: query
+          required: true
+          description: The query in natural language that have to be processed
+          schema:
+            type: string
+        - name: juristiction
+          in: query
+          required: true
+          description: The juristiction for which the documents will be searched
+          schema:
+            type: string
+      responses:
+        '200':
+            description: A JSON array of URL of intersesting documents
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/pilot/1-2:
+    get:
+      tags:
+        - Pilot use case
+      summary: Premium information search
+      description: The API for the pilot use case 1.2
+      security:
+        - oAuth2: []
+      parameters: 
+        - name: query
+          in: query
+          required: true
+          description: The query in natural language that have to be processed
+          schema:
+            type: string
+        - name: juristiction
+          in: query
+          required: true
+          description: The juristiction for which the documents will be searched
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A JSON array of URL of intersesting documents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/pilot/1-3:
+    post:
+      tags:
+        - Pilot use case
+      summary: Contract Analysis
+      description: The API for the pilot use case 1.3
+      security:
+        - oAuth2: []
+      requestBody:
+        required: true
+        content:
+          application/pdf:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: The annoteted contract in PDF format
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary  
+            
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/pilot/2-1:
+    get:
+      tags:
+        - Pilot use case
+      summary: Expansion request
+      description: The API for the pilot use case 2.1
+      security:
+        - oAuth2: []
+      parameters: 
+        - name: query
+          in: query
+          required: true
+          description: The query in natural language that have to be processed
+          schema:
+            type: string
+        - name: juristiction
+          in: query
+          required: true
+          description: Interesting jurisdiction for your expansion request
+          schema:
+            type: string
+        - name: nemployes
+          in: query
+          required: false
+          description: The number of employees of your company in the choosen juristiction
+          schema:
+            type: integer
+        - name: hasRapresentativeEntity
+          in: query
+          required: false
+          description: Does your company have a rapresentative entity in the chosen jurisdiction?
+          schema:
+            type: boolean
+      responses:
+        '200':
+            description: The list of related paragraphs of laws and related jurisprudence
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      articlePart:
+                        type: string
+                      relatedJurisprudence:
+                        type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/pilot/2-2:
+    get:
+      tags:
+        - Pilot use case
+      summary: Acquisition request
+      description: The API for the pilot use case 2.2
+      security:
+        - oAuth2: []
+      parameters: 
+        - name: query
+          in: query
+          required: true
+          description: The query in natural language that have to be processed
+          schema:
+            type: string
+        - name: juristiction
+          in: query
+          required: true
+          description: Interesting jurisdiction for your acquisition request
+          schema:
+            type: string
+        - name: nemployes
+          in: query
+          required: false
+          description: The number of employees of the company that have to be acquired
+          schema:
+            type: integer
+        - name: hasRapresentativeEntity
+          in: query
+          required: false
+          description: Does the company that have to be aquired a rapresentative entity in the chosen jurisdiction?
+          schema:
+            type: boolean
+      responses:
+        '200':
+            description: The list of related paragraphs of laws and related jurisprudence
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      articlePart:
+                        type: string
+                      relatedJurisprudence:
+                        type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/pilot/2-3:
+    get:
+      tags:
+        - Pilot use case
+      summary: Private lawyer search
+      description: The API for the pilot use case 2.3
+      security:
+        - oAuth2: []
+      parameters: 
+        - name: query
+          in: query
+          required: true
+          description: The query in natural language that have to be processed
+          schema:
+            type: string
+        - name: juristiction
+          in: query
+          required: true
+          description: Interesting jurisdiction for your expansion request
+          schema:
+            type: string
+        - name: nemployes
+          in: query
+          required: false
+          description: The number of employees in the choosen juristiction
+          schema:
+            type: integer
+        - name: hasRapresentativeEntity
+          in: query
+          required: false
+          description: Does your company have a rapresentative entity in the chosen jurisdiction?
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: A summary of the relevant informations
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/pilot/3a-1:
+    post:
+      tags:
+        - Pilot use case
+      summary: Technical definition analysis
+      description: The API for the pilot use case 3a.1
+      security:
+        - oAuth2: []
+      requestBody:
+        required: true
+        content:
+          application/pdf:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: A list of URL of documents that are relevant for the certification of the concrete machinery piece
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/pilot/3a-2:
+    get:
+      tags:
+        - Pilot use case
+      summary: Certification
+      description: The API for the pilot use case 3a.2
+      security:
+        - oAuth2: []
+      parameters: 
+        - name: machineryType
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: applicationArea
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: country
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of URL of documents that are relevant for the certification of the concrete machinery piece AND a list of URL of documents that have to be prepared for the self declaration
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  relevantDoc:
+                    type: array
+                    items:
+                      type: string
+                  certificationDoc:
+                    type: array
+                    items:
+                      type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/pilot/3b-1:
+    post:
+      tags:
+        - Pilot use case
+      summary: Geotermal search
+      description: The API for the pilot use case 3b.1
+      security:
+        - oAuth2: []
+      requestBody:
+        required: true
+        content:
+          application/pdf:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: A JSON array of related content with an associated category
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                    compliance_contents:
+                      type: array
+                      items:
+                        type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/pilot/3b-2:
+    post:
+      tags:
+        - Pilot use case
+      summary: Geotermal project anlysis
+      description: The API for the pilot use case 3b.2
+      security:
+        - oAuth2: []
+      requestBody:
+        required: true
+        content:
+          application/pdf:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: A JSON array of related content with an associated category
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    category:
+                      type: string
+                    compliance_contents:
+                      type: array
+                      items:
+                        type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /api/freesearch:
+    get:
+      summary: Free search
+      description: Free search for public documents
+      tags:
+        - Generic
+      parameters: 
+        - name: query
+          in: query
+          required: true
+          description: The query in natural language that have to be processed
+          schema:
+            type: string
+      responses:
+        '200': 
+          description: An JSON array of URL of documents related to the query
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /api/documents/{filename}:
+    get:
+      summary: Get document
+      description: Retrive a document stored in the Lynx Platform
+      tags:
+        - Generic
+      security:
+        - oAuth2: []
+      parameters: 
+        - name: filename
+          in: path
+          required: true
+          description: The name of the file that has to be retrived
+          schema:
+            type: string
+      responses:
+        '200': 
+          description: The requested document
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+components:
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://?/oauth/token
+          refreshUrl: https://?/oauth/refresh
+        password:
+          tokenUrl: https://?/oauth/token
+          refreshUrl: https://?/oauth/refresh
+          
+  responses:
+    BadRequest:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: NotFound
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
+      required:
+        - code
+        - message
